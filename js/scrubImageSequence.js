@@ -1,3 +1,5 @@
+gsap.registerPlugin(ScrollTrigger);
+
 // Global device width for media queries (canvas sizing now comes from the parent element)
 const viewportWidth = document.documentElement.clientWidth;
 const mm = gsap.matchMedia();
@@ -24,16 +26,13 @@ function initSections() {
   });
 }
 
-// Update the global loading counter and call lenis.resize when all images have loaded.
+// Update the global loading counter.
 function updateGlobalImageCount() {
   globalImagesRemaining--;
   const updatedPercent =
     100 - Math.round((globalImagesRemaining * 100) / totalImagesCount);
   // Optionally, use updatedPercent to update a loading bar.
   if (globalImagesRemaining === 0) {
-    setTimeout(() => {
-      lenis.resize();
-    }, 500);
   }
 }
 
@@ -97,7 +96,7 @@ function initCanvasAnimations(section, images, context, canvas) {
       const delay = block.dataset.autoplayDelay
         ? Number(block.dataset.autoplayDelay)
         : 0;
-      
+
       if (window.scrollY <= 1) {
         // If a delay is specified, wait before starting the autoplay tween.
         gsap.to(blockSequence, {
